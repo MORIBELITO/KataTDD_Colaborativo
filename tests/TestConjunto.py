@@ -1,16 +1,25 @@
-class Conjunto:
-    def __init__(self, datos, pesos):
-        self.__datos = datos
-        self.__pesos = pesos
+import unittest
+from src.logica.Conjunto import Conjunto
 
-    def promedio(self):
-        if not self.__datos:
-            return None  # Si el conjunto está vacío, retornamos None
+class TestConjunto(unittest.TestCase):
+    def test_conjunto_vacio_retornaNone(self):
+        conjunto = Conjunto([])
+        resultado = conjunto.promedio()
+        print(f"Test conjunto vacío: {resultado}")
+        self.assertIsNone(resultado)
 
-        if len(self.__datos) != len(self.__pesos):
-            raise ValueError("La cantidad de datos y pesos deben ser iguales")
+    def test_conjunto_unElemento_retornaValorUnicoElemento(self):
+        conjunto = Conjunto([5])
+        resultado = conjunto.promedio()
+        print(f"Test un elemento: {resultado}")
+        self.assertEqual(5, resultado)
 
-        total = sum(d * p for d, p in zip(self.__datos, self.__pesos))
-        total_pesos = sum(self.__pesos)
+    def test_conjunto_unElemento_conPesos_retornaValorUnicoElementoPonderado(self):
+        conjunto = Conjunto([5], [3])  # Conjunto con un solo elemento y su peso
+        resultado = conjunto.promedio()
+        print(f"Test un elemento con peso: {resultado}")
+        self.assertEqual(5, resultado)
 
-        return total / total_pesos
+if __name__ == "__main__":
+    unittest.main()
+
